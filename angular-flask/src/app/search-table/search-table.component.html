@@ -7,7 +7,7 @@
 <nav>
   <ul class="pagination pull-right">
     <li class="page-item disabled">
-        <a style="border:none"> Displaying {{pageNo*50}} - {{totalUsers >50 ? pageNo*50 + 49 : totalUsers}} of {{totalUsers}} |
+        <a style="border:none"> Displaying {{totalUsers < (pageNo*50) ? 0 : pageNo*50 }} - {{totalUsers >50 ? pageNo*50 + 49 : totalUsers}} of {{totalUsers}} |
             <span style = "font-style: italic; color:rgb(105, 13, 13)"> 
                 Page no: {{displayedpageNo}}
             </span> 

@@ -10,18 +10,67 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'pras_raja'
 app.config['MYSQL_PASSWORD'] = 'mobile6120'
 app.config['MYSQL_DB'] = 'flask-Ng'
+app.secret_key = 'thai samosa' 
 
 mysql = MySQL(app)
 
+session = dict();
+
+@app.route("/loginState", methods=['GET','POST'])
+def loginState():
+	global session
+	print('called')
+	if 'loggedIn' in session and session['loggedIn'] == True:
+		print("session value:", session.items())
+		return jsonify({'authenticated': session['authenticated'], 'name': session['name']})
+	else:
+		print("session value:", session.items())
+		return jsonify({'authenticated': False, 'name': 'Stranger' })
+
+	
+@app.route("/logout", methods=['GET','POST'])
+def logout():
+	global session
+	session['authenticated'] = False
+	session['name'] =  'Stranger'
+	session['loggedIn'] = False
+	print(session.items())
+	return jsonify({'authenticated': session['authenticated'], 'name': session['name']})
 
 
-@app.route("/", methods=['GET','POST'])
-def home():
+
+@app.route("/login", methods=['GET','POST'])
+def login():
+	global session
 	cur = mysql.connection.cursor()
-	cur.execute('SELECT DISTINCT City from purchase_orders')
-	rv = cur.fetchall()
-	print(rv)
-	return jsonify(rv)
+	print("session: ", session.items())
+	print("login called\n")
+	print(request.args)
+	if 'loggedIn' in session and session['loggedIn'] == True:
+		print("check1")
+		return jsonify({'authenticated': session['authenticated'], 'name': session['name']})
+
+	
+	else:
+		print("else called\n\n")
+		username = request.args['username']
+		password = request.args['password']
+		name = ""
+		cur.execute('''SELECT * from users where username=%(u)s and password=%(p)s''', {'u':username, 'p':password})
+		rv = cur.fetchall()
+		print("fetchall", rv)
+		if rv:
+			session['name'] = rv[0][-1]
+			session['authenticated']= True
+			session['loggedIn'] = True; 
+	
+		else:
+			session['name'] = 'Stranger'
+			session['authenticated']= False
+			session['loggedIn'] = False
+		print("\ncheck\n")
+		print({'authenticated': session['authenticated'], 'name': session['name']})
+		return jsonify({'authenticated': session['authenticated'], 'name': session['name']})
 
 
 @app.route("/users", methods=['GET','POST'])

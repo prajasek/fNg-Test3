@@ -1,0 +1,16 @@
+.navbar-brand{
+    color: rgb(255, 255, 255);
+}
+
+nav {
+    border-radius: 0px;
+    color: white;
+}
+
+.logout{
+    font-size: 18px;
+    cursor: pointer;
+    color: white;
+    animation: 1s ease-in-out;
+    
+}
