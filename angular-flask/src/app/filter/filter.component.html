@@ -1,0 +1,40 @@
+<div class='main'>
+
+<mat-form-field appearance="fill" >
+  <mat-label>Country: </mat-label>
+  <mat-select formControlName="cntry" (selectionChange)="onChangeCountry($event)">  
+    <mat-option *ngFor="let cntry of countries" [value]="cntry" > 
+        {{cntry}}
+      </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label>State: </mat-label>
+  <mat-select formControlName="state" (selectionChange)="onChangeState($event)" >
+    <mat-option *ngFor="let state of states" [value]="state">
+        {{state}}
+      </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label>City: </mat-label>
+  <mat-select formControlName="city" (selectionChange)="onChangeCity($event)" >
+    <mat-option *ngFor="let city of cities" [value]="city">
+        {{city}}
+      </mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+<button mat-raised-button color="primary" *ngIf="dropDownStatus" (click)="resetFilters()">
+    Clear Selection
+</button>
+
+
+
+</div>
+<div class='geoSelect'>
+    <h4>{{country}} <span *ngIf='dropDownStatus'> - </span> {{state}} <span *ngIf='dropDownStatus'> - </span> {{city}}</h4> 
+</div>

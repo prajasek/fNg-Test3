@@ -1,0 +1,23 @@
+.main  {
+    display: flex;
+    padding:10px;
+    align-content: center;
+    border: black;
+    flex-wrap: wrap;
+    width: 70%;
+    
+}
+
+.geoSelect{
+    width: 100%;
+    padding-left: 1%;
+}
+
+
+mat-form-field {
+    padding:10px;
+}
+button{
+    margin-top:1%;
+    height: 50%; 
+}
